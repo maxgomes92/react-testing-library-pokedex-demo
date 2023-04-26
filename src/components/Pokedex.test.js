@@ -1,9 +1,13 @@
-import "@testing-library/jest-dom/extend-expect";
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Pokedex from "./Pokedex";
 
-test("React Testing Library works!", () => {
-  const { getByText } = render(<Pokedex name="Jill" />);
-  expect(getByText(/hello jill/i)).toBeInTheDocument();
+test("Pokedéx", () => {
+  render(<Pokedex />);
+
+  const titleEl = screen.queryByTestId("page-title");
+
+  expect(titleEl).toBeInTheDocument();
+  expect(titleEl.innerHTML).toBeTruthy();
+  expect(screen.queryByTestId("pokemon-details")).not.toBeInTheDocument();
 });
