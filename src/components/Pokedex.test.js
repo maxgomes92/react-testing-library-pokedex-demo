@@ -5,9 +5,15 @@ import Pokedex from "./Pokedex";
 test("Pokedéx", () => {
   render(<Pokedex />);
 
-  const titleEl = screen.queryByTestId("page-title");
+  const titleHeader = screen.queryByTestId("pokedex-title");
+  expect(titleHeader).toBeInTheDocument();
+  expect(titleHeader.querySelector("h1")).toBeInTheDocument();
+  expect(titleHeader.querySelector("h1").innerHTML).toBeTruthy();
 
-  expect(titleEl).toBeInTheDocument();
-  expect(titleEl.innerHTML).toBeTruthy();
-  expect(screen.queryByTestId("pokemon-details")).not.toBeInTheDocument();
+  const formSection = screen.queryByTestId("pokedex-form");
+  expect(formSection).toBeInTheDocument();
+  expect(formSection.querySelector("label")).toBeInTheDocument();
+  expect(formSection.querySelector("input")).toBeInTheDocument();
+
+  expect(screen.queryByTestId("pokedex-details")).not.toBeInTheDocument();
 });

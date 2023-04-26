@@ -27,10 +27,10 @@ export default () => {
 
   return (
     <>
-      <header>
-        <h1 data-testid="page-title">Pokedex!</h1>
+      <header data-testid="pokedex-title">
+        <h1>Pokedex!</h1>
       </header>
-      <section>
+      <section data-testid="pokedex-form">
         <form onSubmit={onSubmit}>
           <label htmlFor="search-input" style={{ display: "block" }}>
             Pokemón name
