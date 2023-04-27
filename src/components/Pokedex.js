@@ -10,6 +10,11 @@ export default () => {
     const formData = new FormData(event.currentTarget);
     const searchTerm = formData.get("search-input");
 
+    if (!searchTerm) {
+      // https://github.com/jsdom/jsdom/issues/2898
+      return;
+    }
+
     pokemonService
       .getPokemon(searchTerm)
       .then(({ data }) => {
@@ -46,10 +51,10 @@ export default () => {
       </section>
       {pokemon && (
         <section
-          data-testid="pokemon-details"
+          data-testid="pokedex-details"
           style={{ border: "1px solid", marginTop: 5, padding: 5, width: 300 }}
         >
-          <h2 data-testid="pokemon-name">{pokemon.name}</h2>
+          <h2>{pokemon.name}</h2>
           <ul>
             <li>Height: {pokemon.height}</li>
             <li>Weight: {pokemon.weight}</li>
