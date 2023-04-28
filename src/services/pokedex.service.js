@@ -4,7 +4,7 @@ const BASE_URL = "https://pokeapi.co/api/v2";
 
 export default {
   getPokemon: (name) => {
-    if (!name) {
+    if (!name || typeof name !== "string") {
       throw new Error("Name is required!");
     }
 
