@@ -5,7 +5,7 @@ import axios from "axios";
 
 jest.mock("axios");
 
-jest.spyOn(window, "alert");
+const alertSpy = jest.spyOn(window, "alert");
 
 describe("Pokedéx", () => {
   beforeEach(() => {
@@ -94,24 +94,41 @@ describe("Pokedéx", () => {
     });
   });
 
-  // it("should return 404", async () => {
-  //   const response = Promise.reject({
-  //     response: {
-  //       status: 404,
-  //     },
-  //   });
+  describe("should render alert on error", () => {
+    const cases = [
+      [
+        "Pokemon not found!",
+        {
+          response: {
+            status: 404,
+          },
+        },
+      ],
+      [
+        "Generic error!",
+        {
+          response: {
+            data: "Generic error!",
+          },
+        },
+      ],
+    ];
 
-  //   render(<Pokedex />);
+    it.each(cases)("should alert with %s", async (expected, data) => {
+      const response = Promise.reject(data);
 
-  //   axios.get.mockImplementation((name) => response);
+      render(<Pokedex />);
 
-  //   const formSection = screen.getByTestId("pokedex-form");
-  //   const searchEl = formSection.querySelector("input");
+      axios.get.mockImplementation(() => response);
 
-  //   fireEvent.change(searchEl, { target: { value: "pikachu" } });
-  //   fireEvent.submit(searchEl);
-  //   await act(() => response);
+      const formSection = screen.getByTestId("pokedex-form");
+      const searchEl = formSection.querySelector("input");
 
-  //   expect(window.alert).toHaveBeenCalled();
-  // });
+      fireEvent.change(searchEl, { target: { value: "pikachu" } });
+      fireEvent.submit(searchEl);
+      await act(() => response.catch(() => {}));
+
+      expect(alertSpy).toHaveBeenCalledWith(expected);
+    });
+  });
 });
