@@ -32,10 +32,10 @@ export default () => {
 
   return (
     <>
-      <header data-testid="pokedex-title">
+      <header>
         <h1>Pokedex!</h1>
       </header>
-      <section data-testid="pokedex-form">
+      <section>
         <form onSubmit={onSubmit}>
           <label htmlFor="search-input" style={{ display: "block" }}>
             Pokemón name
@@ -51,7 +51,6 @@ export default () => {
       </section>
       {pokemon && (
         <section
-          data-testid="pokedex-details"
           style={{ border: "1px solid", marginTop: 5, padding: 5, width: 300 }}
         >
           <h2>{pokemon.name}</h2>
